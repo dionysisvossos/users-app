@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const UserService = require('../services/user.services');
 const bcrypt = require('../node_modules/bcrypt');
+
 const logger = require('../logger/logger');
 
 exports.findAll = async(req, res) => {
@@ -89,7 +90,7 @@ exports.update = async(req, res) => {
     }
 }
 
-exports.deleteByUsename = async(req, res) => {
+exports.deleteByUsername = async(req, res) => {
     const username = req.params.username;
     console.log('Delete user with username: ', username);
 

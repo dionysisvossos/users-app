@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
-const AuthService = require('../services/auth.service');
+const authService = require('../services/auth.service');
 
 exports.login = async(req, res) =>{
   console.log("Login user", req.body);
@@ -15,7 +15,7 @@ exports.login = async(req, res) =>{
     
     // if (result && result.username === username && result.password === password){
     if (result && result.username === username && isMatch){
-        const token = AuthService.generateAccessToken(result);
+        const token = authService.generateAccessToken(result);
       res.status(200).json({status: true, data: token});
     } else {
       res.status(404).json({status: false, data: "user not logged in"});
@@ -32,7 +32,7 @@ exports.googleLogin = async(req, res) => {
   if (!code) {
     return res.status(400).json({status: false, data: "Authorization code not provided"});
   } else {
-    let user = await AuthService.googleAuth(code);
+    let user = await authService.googleAuth(code);
     if (user) {
       console.log(">>>", user)
       res.status(200).json({status: true, data: user});
