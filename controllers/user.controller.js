@@ -27,7 +27,7 @@ exports.findOne = async(req, res) => {
         if (result) {
         res.status(200).json ({status: true, data: result});
     } else {
-        res.status(404).json({status: false, data: 'User not found'});
+        res.status(400).json({status: false, data: 'User not found'});
     }
     } catch (err) {
         console.log('Problem in finding user', err.message);
@@ -39,8 +39,11 @@ exports.create = async(req, res) => {
     console.log('Create user in collection users');
     let data = req.body;
     const SaltOrRounds = 10;
-    const hashedPassword = await bcrypt.hash(data.password, SaltOrRounds)
     
+    let hashedPassword = '';
+    if (data.password) 
+        hashedPassword = await bcrypt.hash(data.password, SaltOrRounds)
+      
     const newUser = new User({
         username: data.username,
         password: hashedPassword,
@@ -58,7 +61,7 @@ exports.create = async(req, res) => {
         res.status(200).json ({status: true, data: result});
     } catch (err) {
         console.log('Problem in creating user', err.message);
-        res.status(404).json({status: false, data: err.message});
+        res.status(400).json({status: false, data: err.message});
     }
 }
 
@@ -82,7 +85,7 @@ exports.update = async(req, res) => {
         if (result) {
             res.status(200).json({status: true, data: result});
         } else {
-            res.status(404).json({status: false, data: 'User not found'});
+            res.status(400).json({status: false, data: 'User not found'});
         }
     }   catch (err) {
         console.log('Problem in updating user', err.message);
@@ -99,7 +102,7 @@ exports.deleteByUsername = async(req, res) => {
         if (result) {
             res.status(200).json({status: true, data: result});
         } else {
-            res.status(404).json({status: false, data: 'User not found'});
+            res.status(400).json({status: false, data: 'User not found'});
         }
     } catch (err) {
         console.log('Problem in deleting user', err.message);
@@ -117,7 +120,7 @@ exports.deleteByEmail = async(req, res) => {
         if (result) {
             res.status(200).json({status: true, data: result});
         } else {
-            res.status(404).json({status: false, data: 'User not found'});
+            res.status(400).json({status: false, data: 'User not found'});
         }
     }
     catch (err) {

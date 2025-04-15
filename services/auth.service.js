@@ -4,7 +4,7 @@ const { OAuth2Client } = require('google-auth-library');
 
 function generateAccessToken(user) {
 
-    console.log('Auth service', user);
+    // console.log('Auth service', user);
     const payload = {
         username: user.username,
         email: user.email,
