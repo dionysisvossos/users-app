@@ -144,5 +144,5 @@ exports.checkDuplicateEmail = async(req, res) => {
       res.status(400).json({ status: false, data: err });
       console.error(`Problem in finding email address: ${email}`, err);
     }
-  }
+}
    
